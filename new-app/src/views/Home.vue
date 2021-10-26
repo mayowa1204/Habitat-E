@@ -38,36 +38,39 @@ import router from '../router'
 export default defineComponent({
   name:'Home',
   setup() {
-    const test2 = ref("hello");
     const aunctionData = ref([]);
     const records = ref([]);
     const showCurrentRecord = ref(false);
     const currentRecord = ref({});
 
     async function getAunctionData() {
-      const test = await jsonp(
-        "https://data.nationalgrideso.com/api/3/action/datastore_search?resource_id=6fd8e042-be27-4c67-ad59-5acdd2a7b0fd"
-      );
+      try {
+          const response = await jsonp(
+            "https://data.nationalgrideso.com/api/3/action/datastore_search?resource_id=6fd8e042-be27-4c67-ad59-5acdd2a7b0fd"
+          );
 
-      const metadata = {
-        help: test.help,
-        resource_id: test.result.resource_id,
-        total: test.result.total,
-        include_total: test.result.include_total,
-        links: {
-          start: test.result._links.start,
-          next: test.result._links.next,
-        },
-        records: records.value,
-      };
-      test.result.records.forEach((record) => {
-         setRecord(record)
-      });
+            const metadata = {
+              help: response.help,
+              resource_id: response.result.resource_id,
+              total: response.result.total,
+              include_total: response.result.include_total,
+              links: {
+                start: response.result._links.start,
+                next: response.result._links.next,
+              },
+              records: records.value,
+            };
+            response.result.records.forEach((record) => {
+              setRecord(record)
+            });
 
-      if (!aunctionDataStore.state.aunctionData[0]) {
-        aunctionDataStore.state.aunctionData.push(metadata);
+            if (!aunctionDataStore.state.aunctionData[0]) {
+              aunctionDataStore.state.aunctionData.push(metadata);
+            }
+          aunctionData.value = aunctionDataStore.state.aunctionData;
+      } catch(error){
+        console.log(error)
       }
-      aunctionData.value = aunctionDataStore.state.aunctionData;
     }
     function setRecord(record){
         const result = {
@@ -100,8 +103,8 @@ export default defineComponent({
       records.value.push(result);
     }
     async function viewRecords(allRecords){
-          aunctionDataStore.state.currentRecords=allRecords
-       router.push('records')
+        aunctionDataStore.state.currentRecords=allRecords
+        router.push('records')
     }
     function setCurrentRecord(record) {
       currentRecord.value = record;
@@ -110,7 +113,6 @@ export default defineComponent({
     }
    getAunctionData();
     return {
-      test2,
       aunctionData,
       records,
       showCurrentRecord,

@@ -13,7 +13,7 @@
           <v-row style="width:90%; margin:auto; margin-top:40px" >
           <v-col cols= "12" md= "6" style="justify-content:center">
         <h4 style="text-align: justify; line-height:2">
-           Market Name: {{ currentRecord.marketName }}. <br />
+              Market Name: {{ currentRecord.marketName }}. <br />
               Bidding Level Name: {{ currentRecord.biddingLevelName }}. <br />
               Order ID: {{ currentRecord.orderID }} <br />
               Portfolio:{{ currentRecord.portfolio }} <br />
@@ -58,9 +58,6 @@
                <v-col cols= "12" md= "6">
            </v-col>
           </v-row>
-       
-             
-             
           </v-card-text>
         </v-card>
       </v-row>
@@ -80,13 +77,11 @@
                 Delivery Start: {{ new Date(record.deliveryStart).toLocaleDateString() }} 
                <br/>
                   DeliveryEnd: {{ new Date(record.deliveryEnd).toLocaleDateString()}}
-              
             </v-card-text>
 
             <v-card-actions class="mx-auto"   style="justify-content:center" >
               <v-btn
                 class="mx-auto"
-              
                 @click="setCurrentRecord(record)"
                 >View Record</v-btn
               ></v-card-actions
@@ -106,19 +101,20 @@ import {aunctionDataStore } from "../utils/aunctionDataStore"
 
 export default defineComponent({
     name:'Records',
-  setup() {
-    const page = ref(1)
-    const showCurrentRecord = ref(false);
-    const currentRecord = ref({});
-    const records = computed(()=> {
-    return aunctionDataStore.state.currentRecords.slice((page.value - 1) * 6, page.value * 6)
-    })
-    function setCurrentRecord(record) {
-      currentRecord.value = record;
-      showCurrentRecord.value = true;
-    }
-    return {records, showCurrentRecord, currentRecord, setCurrentRecord, page}
-  },
+    setup() {
+        const page = ref(1)
+        const showCurrentRecord = ref(false);
+        const currentRecord = ref({});
+        const records = computed(()=> {
+            return aunctionDataStore.state.currentRecords.slice((page.value - 1) * 6, page.value * 6)
+        })
+
+        function setCurrentRecord(record) {
+            currentRecord.value = record;
+            showCurrentRecord.value = true;
+        }
+        return {records, showCurrentRecord, currentRecord, setCurrentRecord, page}
+    },
 
 });
 </script>
