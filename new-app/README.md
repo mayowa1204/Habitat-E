@@ -1,24 +1,32 @@
+
 # new-app
 
-## Project setup
+## Prerequisites
+
+- Install Node: https://nodejs.org/en/download/
+```bash
+$ cd new-app
 ```
-npm install
+Within the new-app folder:
+
+```bash
+$ npm install
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+### Development
+
+To compile and hot-reload the frontend
+
+```bash
+# new-app in watch-mode
+$ npm run serve
+
+
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Production
 
-### Lints and fixes files
-```
-npm run lint
-```
+```bash
+# new-app
+$ npm run build
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
